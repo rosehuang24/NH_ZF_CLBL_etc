@@ -1,26 +1,31 @@
 #this workflow was created in the ./freeman_nh folder
-#the result file (auto_neutral_chunk3.bed) was further deposited in the txt_might_be_useful folder under /wgsdata
+#the result file (auto_neutral_chunk.bed) was further deposited in the txt_might_be_useful folder under /wgsdata
 
 #get the part that I don't want (phastscore >0.7) 
 #the scores.bed file was from Xiaoyi
 
 grep '^chr' /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/neutral_region/scores.bed | sed 's/M/MT/g' | awk '$4 >= 0.7 {print$1"\t"$2"\t"$3}' > PClargerthan0.7.bed
-bedtools merge -i PClargerthan0.7.bed | awk '$3-$2<50 {print$0}' > PC_dump.bed. #this is the freeman way. doi:10.1371/journal.pgen.1004016 SuppText7
+bedtools merge -i PClargerthan0.7.bed | awk '$3-$2>49 {print$0}' > PC_dump.bed. #this is the freeman way. 
+
+#Cited from the text: (Freeman et al. 2014) doi:10.1371/journal.pgen.1004016 SuppText7
+#Conserved regions of the mouse genome were defined as stretches of consecutive bases with
+#phastCons scores > 0.7 longer than 50 bp. The 50 bp threshold was chosen because this
+#approximates the lower size limit of miRNA genes (www.mirbase.org), and such genes have
+#been previously discovered within HARs 
 
 
 #this part generate the bed file with regions I don't want:
-#due to previous attempts, the order of this output is third thus there is a 3 in each of the file names. Please don't mind.
 
-cat PC_dump.bed editcds.bed | sed 's/chr//g' | sort -k1,1n -k2,2n -k3,3n | grep -v 'A' > after_cat3.bed
-bedtools merge -i after_cat3.bed > dispose3.bed
+cat PC_dump.bed editcds.bed | grep -v 'A' | grep -v 'K' | grep -v 'Z' | grep -v 'W' | grep -v 'M' |sed 's/chr//g' | sort -k1,1n -k2,2n -k3,3n  > after_cat.bed
+bedtools merge -i after_cat.bed > dispose.bed
 
 #replace those regions with N, so they got disposed together with missing positions in reference genome.
 
-bedtools maskfasta -fi /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/chicken_ref/Gallus_gallus.GRCg6a.dna.toplevel.fa -bed dispose3.bed -fo maskeddispose3.fasta
+bedtools maskfasta -fi /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/chicken_ref/Gallus_gallus.GRCg6a.dna.toplevel.fa -bed dispose.bed -fo maskeddispose.fasta
              
 #generate the bed file containg chuncks of semi-neutral regions
 
-python3 getneutral.py maskeddispose3.fasta neutral_chunk3.bed log3.txt
+python3 getneutral.py maskeddispose.fasta neutral_chun3.bed log.txt
 
-grep -v '^M' neutral_chunk3.bed | grep -v '^Z' | grep -v '^W' | awk '$1<=29 {print$0}' | sort -k1,1n -k2,2n > auto_neutral3.bed
-bedtools merge -i auto_neutral3.bed > auto_neutral_chunk3.bed
+awk '$1<29 {print$0}' neutral_chunk.bed | sort -k1,1n -k2,2n > auto_neutral.bed
+bedtools merge -i auto_neutral.bed > auto_neutral_chunk.bed
