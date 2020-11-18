@@ -33,7 +33,7 @@ pop=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $1}'`
 parallel echo dispose/{}.noncallable.bed \>\> ${pop}.line :::: $parentDIR/txt_might_be_useful/${pop}.popline.txt
 
 line=`paste -sd ' ' ${pop}.line`
-fraction=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $2}'`
+fraction=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $2}'`  #the fraction should be 30% if you want exclude sites where at least 70% of the population is uncallable. 
 
 
 cat $line | sort | uniq -c | awk '$1>$fraction {print$2"\t"$3"\t"$4}' | sort -k1,1n -k2,2n -k3,3n  > $CRNTDIR/dispose/${pop}.dispose.bed
