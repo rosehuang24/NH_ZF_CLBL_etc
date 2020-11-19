@@ -1,0 +1,9 @@
+popfile=$parentDIR/all/all.indv.txt
+#popfile=$parentDIR/txt_might_be_useful/pop.names.txt
+indv=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $1}'`
+
+
+grep -v '#' indv_vcfs/${indv}.vcf | awk '{print$1"_"$2}' | sort > zf/${indv}.coordlist
+
+comm -12 zf/${indv}.coordlist 0fold.sort.coord.deg > zf/${indv}.new0deg
+comm -12 zf/${indv}.coordlist 4fold.sort.coord.deg > zf/${indv}.new4deg
