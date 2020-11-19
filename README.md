@@ -1,1 +1,3 @@
-# neutral_het
+# README
+
+The neutral region is correct for Galgal6
