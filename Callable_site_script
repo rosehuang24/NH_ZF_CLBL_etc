@@ -33,7 +33,8 @@ pop=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $1}'`
 parallel echo dispose/{}.noncallable.bed \>\> ${pop}.line :::: $parentDIR/txt_might_be_useful/${pop}.popline.txt
 
 line=`paste -sd ' ' ${pop}.line`
-fraction=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $2}'`  #the fraction should be 30% if you want exclude sites where at least 70% of the population is uncallable. 
+fraction=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $2}'`  
+#the fraction should be 30% if you want exclude sites where at least 70% of the population is uncallable. 
 
 
 cat $line | sort | uniq -c | awk '$1>$fraction {print$2"\t"$3"\t"$4}' | sort -k1,1n -k2,2n -k3,3n  > $CRNTDIR/dispose/${pop}.dispose.bed
@@ -42,6 +43,6 @@ cat $line | sort | uniq -c | awk '$1>$fraction {print$2"\t"$3"\t"$4}' | sort -k1
 #for the 108 individuals there are 1620365 bps noPass and 34053653 Pass. 95% pass rate
 cat $parentDIR/all/noPass_Var.bed $CRNTDIR/dispose/${pop}.dispose.bed | sort -k1,1n -k2,2n > $CRNTDIR/dispose/${pop}.withVar.dispose.bed
 
-$bedtools complement -i $CRNTDIR/dispose/${pop}.withVar.dispose.chunck.bed -g /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/chicken_ref/genome.txt | awk '$3>$2 {print$0}' > ${pop}.goodQ.chunck.bed
+$bedtools complement -i $CRNTDIR/dispose/${pop}.withVar.dispose.bed -g $REFDIR/genome.txt | awk '$3>$2 {print$0}' > ${pop}.goodQ.chunck.bed
 
 $bedtools intersect -a $nonREP -b ${pop}.goodQ.chunck.bed >${pop}.final.callable.bed
