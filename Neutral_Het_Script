@@ -1,0 +1,25 @@
+#cut out the 1kb regions from the semi-neutral region ikb.py:no 25kb interval. They are 1kb side by side.
+#auto_neutral_chunk.bed: the resultent neutral region bed file from the Neutral_Region_script
+
+python3 ikb.py auto_neutral_chunk.bed auto_1kb.bed
+
+
+#use the general ikb set and 
+#intersect with population wise callable bed 
+#to see how many bases are callable in the neutral 1kb regions. 
+#The python script "half.callable.py" filters out the region 
+#that are uncallable for over 50% of it. Or other proportions.
+
+parallel bedtools intersect -a auto_1kb.bed -b /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/callablesites_all/{}.final.callable.bed -wo \| awk \'{print\$1\"\\t\"\$2\"\\t\"\$7}\' \> {}.prep.50.intersect :::: popname.txt
+parallel python3 half.callable.py {}.prep.50.intersect {}_neutral_1kb.bed :::: popname.txt
+parallel python3 25_ikb.py {}_neutral_1kb.bed 25apart_{}_neutral_1kb.bed :::: popname.txt
+
+
+#get the coordinates for the heterozygous site:
+# here instead of parallel, job array might be a better choice. Will update it once I write the script.
+#parallel python3 het.py /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/99/{}.callable.recode.vcf {}.het.noinfo.vcf :::: ../WLH_samples_all.txt
+#parallel awk \'\{print\$1\"\\t\"\$2-1\"\\t\"\$2\}\' {}.het.noinfo.vcf \| sort \> {}.het.coord.bed :::: ../WLH_samples_all.txt
+#parallel bedtools intersect -a WLH_neutral_1kb.bed -b {}.het.coord.bed \> {}.neutral.het.txt :::: ../WLH_samples_all.txt
+
+#parallel --colsep '\t' bedtools intersect -a 25apart_{1}_neutral_1kb.bed -b /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/neutral_region/{2}.het.coord.bed \> {2}.neutral.het.txt :::: breedcodes.txt
+#parallel --colsep '\t' bedtools intersect -a 10apart_{1}_neutral_1kb.bed -b {2}.het.coord.bed \> 10apart_{2}.neutral.het.txt :::: breedcodes.txt
