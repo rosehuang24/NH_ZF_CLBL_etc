@@ -27,13 +27,16 @@ parallel bedtools intersect -a auto_1kb.bed -b /pdiskdata/zhenyinggroupADS/huang
 parallel python3 half.callable.py {}.prep.50.intersect {}_neutral_1kb.bed :::: popname.txt
 parallel python3 25_ikb.py {}_neutral_1kb.bed 25apart_{}_neutral_1kb.bed :::: popname.txt
 
-#use the ikb neutral bed to obtein vcf information in this range (25kb apart, 1kb set)
+#till here it's population-wise
+############################################
+#from here it's individual-wise
+
 
 #get the coordinates for the heterozygous site:
-# here instead of parallel, job array might be a better choice. Will update it once I write the script.
-#parallel python3 het.py /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/99/{}.callable.recode.vcf {}.het.noinfo.vcf :::: ../WLH_samples_all.txt
-#parallel awk \'\{print\$1\"\\t\"\$2-1\"\\t\"\$2\}\' {}.het.noinfo.vcf \| sort \> {}.het.coord.bed :::: ../WLH_samples_all.txt
-#parallel bedtools intersect -a WLH_neutral_1kb.bed -b {}.het.coord.bed \> {}.neutral.het.txt :::: ../WLH_samples_all.txt
+# First extract the coordinates of heterozugous site from individual vcfs, 
+#and then intersect with the 1kb neutral region sets (25kb apart) obtained from the last step.
 
-#parallel --colsep '\t' bedtools intersect -a 25apart_{1}_neutral_1kb.bed -b /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/neutral_region/{2}.het.coord.bed \> {2}.neutral.het.txt :::: breedcodes.txt
-#parallel --colsep '\t' bedtools intersect -a 10apart_{1}_neutral_1kb.bed -b {2}.het.coord.bed \> 10apart_{2}.neutral.het.txt :::: breedcodes.txt
+python3 het.py ${indvvcf} nh/${indv}.het.coord.bed
+$bedtools intersect -a 25apart_${pop}_neutral_1kb.bed -b nh/${indv}.het.coord.bed ${indv}.neutral.het.txt
+
+
