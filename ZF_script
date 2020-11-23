@@ -5,7 +5,9 @@ indv=`head -n $SGE_TASK_ID $popfile | tail -n1 | awk '{print $1}'`
 
 grep -v '#' indv_vcfs/${indv}.vcf | awk '{print$1"_"$2}' | sort > zf/${indv}.coordlist
 # Or to use homozygous alternate only:
-python3 hom_alt.py indv_vcfs/${indv}.vcf zf/${indv}.coordlist
 
-comm -12 zf/${indv}.coordlist 0fold.sort.coord.deg > zf/${indv}.new0deg
-comm -12 zf/${indv}.coordlist 4fold.sort.coord.deg > zf/${indv}.new4deg
+python3 hom_alt.py indv_vcfs/${indv}.vcf zf/${indv}.coordlist
+sort zf/${indv}.coordlist > zf/${indv}.sorted.coordlist
+
+comm -12 zf/${indv}.sorted.coordlist 0fold.sort.coord.deg > zf/${indv}.new0deg
+comm -12 zf/${indv}.sorted.coordlist 4fold.sort.coord.deg > zf/${indv}.new4deg
