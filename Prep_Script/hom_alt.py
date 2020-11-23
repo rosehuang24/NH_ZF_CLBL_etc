@@ -18,9 +18,9 @@ for lines in inh:
             gt=line.split(":")
             #print(gt[0])
             if gt[0] == "1/1":
-                outh.write(coord[0]+"\t"+str(int(coord[1])-1)+"\t"+coord[1]+"\n")
+                outh.write(coord[0]+"_"+coord[1]+"\n")
             elif gt[0] == "1|1":
-                outh.write(coord[0]+"\t"+str(int(coord[1])-1)+"\t"+coord[1]+"\n")
+                outh.write(coord[0]+"_"+coord[1]+"\n")
 
 
 
