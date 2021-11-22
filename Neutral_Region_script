@@ -1,4 +1,7 @@
-s#this workflow was created in the ./freeman_nh folder
+###update 2021/11/22
+#might not be correct. I reran it today and the flow is https://github.com/rosehuang24/NH_ZF_CLBL_etc/G-PHOCS_freeman_NH.md
+
+#this workflow was created in the ./freeman_nh folder
 #the result file (auto_neutral_chunk.bed) was further deposited in the txt_might_be_useful folder under /wgsdata
 
 #get the part that I don't want (phastscore >0.7) 
