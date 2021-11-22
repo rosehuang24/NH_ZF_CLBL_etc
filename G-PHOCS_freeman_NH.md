@@ -51,6 +51,11 @@ To combine all the disposable regions:
 
 ```
 cat PC_larger_than_0.5_length3_100b_flanking.merged.tailed.bed CDS.50kb_flanking.bed | sort -k 1,1 -k 2,2n | bedtools merge > dispose_PC0.5_CDS_both.flanking.bed
+```
+
+Complement with the genome coordinates and get the neutral regions (raw):
+
+```
 bedtools complement -i dispose_flanking_PC_CDS.repetitive.bed -g genome.from.dna_rm > neutral.region.flanking_PC_CDS.repetitive.bed
 ```
 
