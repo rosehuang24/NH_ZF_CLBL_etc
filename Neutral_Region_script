@@ -1,4 +1,4 @@
-#this workflow was created in the ./freeman_nh folder
+s#this workflow was created in the ./freeman_nh folder
 #the result file (auto_neutral_chunk.bed) was further deposited in the txt_might_be_useful folder under /wgsdata
 
 #get the part that I don't want (phastscore >0.7) 
@@ -26,6 +26,11 @@ bedtools maskfasta -fi /pdiskdata/zhenyinggroupADS/huangruoshi/wgsdata/chicken_r
 #generate the bed file containg chuncks of semi-neutral regions
 
 python3 getneutral.py maskeddispose.fasta neutral_chun3.bed log.txt
+##****update 11/22/2021:
+#the biopython no longer support IUPAC stuff, this script now just go trash.
+# online, however, have I found a script. remember to use python 2 instead of 3
+python generate_masked_ranges.py masked_repetitive_PC_CDSflanking.fa > PC0.5_flanking_CDS_repetitce_neutral_chunck.bed
+
 
 awk '$1<29 {print$0}' neutral_chunk.bed | sort -k1,1n -k2,2n > auto_neutral.bed
 bedtools merge -i auto_neutral.bed > auto_neutral_chunk.bed
