@@ -18,13 +18,17 @@ grep -v 'A' PC_larger_than_0.5_length3_100b_flanking.bed | grep -v 'K' | grep -v
 
 ## CDS 50kb flanking
 
-It is the same as previous versions
+It is different from previous vesions because I used ensembl CDS.fa instead of extracting from gff
+
 
 ```
-cat editcds.nosex.chrms.sorted.uniq.bed PC_larger_than_0.5_length3_100b_flanking.merged.bed  | sort -k 1,1n -k 2,2n | bedtools merge > CDS_flanking_phastcon0.5_flanking.merged.bed 
+grep "^>" Gallus_gallus.GRCg6a.cds.all.fa | awk -F ":" '{print$3"\t"$4-50000"\t"$5+50000}'  | awk 'BEGIN {OFS="\t" }; { if($2 < 0) print $1"\t0\t"$3; else print $0}'| sort -k1,1 -k2,2n| bedtools merge > CDS.50kb_flanking.midstep.bed
 
-awk '{sum+=$3-$2} END {print sum}' CDS_flanking_phastcon0.5_flanking.merged.bed 
 ```
+
+when we add 50kb flanking to either side, it is possible that the region exceed the chromosome coordinates. For the "below 0" part I have taken care of it in the above command, but we need to cut out the tail too. 
+
+
 
 ## repeatitive regions
 
