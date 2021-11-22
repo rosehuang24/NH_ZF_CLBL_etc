@@ -15,3 +15,16 @@ bedtools merge -i PC_larger_than_0.5.bed | awk '$3-$2>3 {print$1"\t"$2-100"\t"$3
 
 grep -v 'A' PC_larger_than_0.5_length3_100b_flanking.bed | grep -v 'K' | grep -v 'Z' | grep -v 'W' | grep -v 'M' |sed 's/chr//g' | sort -k1,1n -k2,2n -k3,3n | awk 'BEGIN {OFS="\t" }; { if($2 < 0) print $1"\t0\t"$3; else print $0}' | bedtools merge | sort -k 1.1n -k 2,2n > PC_larger_than_0.5_length3_100b_flanking.merged.bed
 ```
+
+## CDS 50kb flanking
+
+It is the same as previous versions
+
+```
+cat editcds.nosex.chrms.sorted.uniq.bed PC_larger_than_0.5_length3_100b_flanking.merged.bed  | sort -k 1,1n -k 2,2n | bedtools merge > CDS_flanking_phastcon0.5_flanking.merged.bed 
+
+awk '{sum+=$3-$2} END {print sum}' CDS_flanking_phastcon0.5_flanking.merged.bed 
+```
+
+## repeatitive regions
+
