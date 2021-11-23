@@ -76,4 +76,6 @@ cut -f 1 1kbs_neutral.region.flanking_PC_CDS.repetitive.bed | sort | uniq > chrm
 parallel awk \'\(\$1==\"{}\"\) {print\$0}\' 1kbs_neutral.region.flanking_PC_CDS.repetitive.bed \> {}_1kb.netral.sets.bed :::: chrm.contigs 
 
 parallel python3 25kb_apart.py {}_1kb.netral.sets.bed {}_1kb.25kb_apart.netral.sets.bed :::: chrm.contigs
+
+cat *_1kb.25kb_apart.netral.sets.bed | awk '($1<29) {print$0}' | sort -k 1,1n -k 2,2n  > autosome_all_neutral_25kb.apart_1kbset.bed
 ```
