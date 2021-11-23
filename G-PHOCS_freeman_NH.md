@@ -59,3 +59,21 @@ Complement with the genome coordinates and get the neutral regions (raw):
 bedtools complement -i dispose_flanking_PC_CDS.repetitive.bed -g genome.from.dna_rm > neutral.region.flanking_PC_CDS.repetitive.bed
 ```
 
+
+## Create 1 kb loci and define the distance between loci
+
+```
+python3 ikb.py neutral.region.flanking_PC_CDS.repetitive.bed 1kbs_neutral.region.flanking_PC_CDS.repetitive.bed 
+```
+now we have 1kb loci side by side, completely neutral by our definitions.
+Next step is to select loci that are at least 25 kb apart from each other. Or other distances if you'd like
+
+since the script is somewhat simple, we need to split chromosomes/contigs
+
+```
+cut -f 1 1kbs_neutral.region.flanking_PC_CDS.repetitive.bed | sort | uniq > chrm.contigs
+
+parallel awk \'\(\$1==\"{}\"\) {print\$0}\' 1kbs_neutral.region.flanking_PC_CDS.repetitive.bed \> {}_1kb.netral.sets.bed :::: chrm.contigs 
+
+parallel python3 25kb_apart.py {}_1kb.netral.sets.bed {}_1kb.25kb_apart.netral.sets.bed :::: chrm.contigs
+```
