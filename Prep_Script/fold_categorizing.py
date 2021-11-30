@@ -50,11 +50,11 @@ for lines in fh:
                     outputline.append("others")
 
         if outputline.count("missense") == 3:
-            zouth.write(position)
+            zouth.write(position+"\n")
         elif outputline.count("synonymous") == 3:
-            fouth.write(position)
+            fouth.write(position+"\n")
         else:
-            dumph.write('\t'.join(outputline))
+            dumph.write('\t'.join(outputline)+"\n")
 
 
 dumph.close()
