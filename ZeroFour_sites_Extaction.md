@@ -62,7 +62,7 @@ Marsden 2016 stated:
 Sites were classed as zero-fold degenerate when the four different bases resulted in four different amino acids, and four-fold degenerate when no changes in amino acids were observed.
 
 
-However, in our study, based on the SNPEff annotation, we set any stop related, start-los and missense as "amino acid changing" snp (need to be rewored in paper)
+However, in our study, based on the SNPEff annotation, we set any stop related, start-los and missense as "amino acid changing" snp (need to be paraphrased in paper)
 In another word, we are only interested in:
 
 ```
