@@ -27,11 +27,13 @@ java -jar snpEff.jar download -v GRCg6a.99
 ```
 
 java -Xmx4g -jar $snpeff/snpEff.jar -c $snpeff/snpEff.config -v Galgal6a fakemuta_uniq.vcf > output_ann.vcf
-cat output_ann.vcf | grep -v "#" | sed 's/NN=/ /' | awk '{print $1 "_" $2, $9}' | sed 's/||WARNING_TRANSCRIPT_NO_START_CODON//g' | sed 's/|||||/BBBBB/g' | sed 's/||,/ /g' | sed 's/,/ /g' > format.ann
+
 ```
 
+## Four-fold/Zero-fold categorization
 
-all possible snpEff annotations are:
+
+All possible snpEff annotations are:
 
 ```
 intragenic_variant
@@ -79,7 +81,9 @@ synonymous_variant
 
 
 
-## Four-fold/Zero-fold categorization
-#need to double check on the script
-python3 iteration.py
+The script is below. 
+Sure it can be improved (such as using parser and gzip reading etc.)
+
+```
+python3 fold_categorizing.py output_ann.vcf four-fold.coords zero-fold.coords all_others-folds.coords
 
