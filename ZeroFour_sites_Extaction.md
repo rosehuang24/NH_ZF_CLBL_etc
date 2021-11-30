@@ -10,7 +10,7 @@ bedtools getfasta -fi Gallus_gallus.GRCg6a.dna.toplevel.fa -bed CDS.from.ensembl
 ## Create fake mutations for each site
 
 ```
-python3 fakemuta.py
+python3 fakemuta.py ../chicken_ref/CDS.from.ensembl.ffn fake_mutation.vcf
 sort -V fake_mutation.vcf | uniq > fakemuta_uniq.vcf
 ```
 
