@@ -30,6 +30,22 @@ java -Xmx4g -jar $snpeff/snpEff.jar -c $snpeff/snpEff.config -v Galgal6a fakemut
 cat output_ann.vcf | grep -v "#" | sed 's/NN=/ /' | awk '{print $1 "_" $2, $9}' | sed 's/||WARNING_TRANSCRIPT_NO_START_CODON//g' | sed 's/|||||/BBBBB/g' | sed 's/||,/ /g' | sed 's/,/ /g' > format.ann
 ```
 
+
+all possible snpEff annotations are:
+
+```
+missense_variant
+missense_variant&splice_region_variant
+splice_region_variant&synonymous_variant
+start_lost
+start_lost&splice_region_variant
+stop_gained
+stop_gained&splice_region_variant
+stop_lost
+stop_lost&splice_region_variant
+synonymous_variant
+```
+
 ## Four-fold/Zero-fold categorization
 #need to double check on the script
 python3 iteration.py
