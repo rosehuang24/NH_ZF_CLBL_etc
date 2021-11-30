@@ -34,6 +34,36 @@ cat output_ann.vcf | grep -v "#" | sed 's/NN=/ /' | awk '{print $1 "_" $2, $9}' 
 all possible snpEff annotations are:
 
 ```
+intragenic_variant
+missense_variant
+missense_variant&splice_region_variant
+splice_acceptor_variant&intron_variant
+splice_acceptor_variant&splice_donor_variant&intron_variant
+splice_acceptor_variant&splice_region_variant&intron_variant
+splice_donor_variant&intron_variant
+splice_donor_variant&splice_region_variant&intron_variant
+splice_region_variant
+splice_region_variant&intron_variant
+splice_region_variant&non_coding_transcript_exon_variant
+splice_region_variant&synonymous_variant
+start_lost
+start_lost&splice_region_variant
+stop_gained
+stop_gained&splice_region_variant
+stop_lost
+stop_lost&splice_region_variant
+synonymous_variant
+
+```
+
+Marsden 2016 stated:
+Sites were classed as zero-fold degenerate when the four different bases resulted in four different amino acids, and four-fold degenerate when no changes in amino acids were observed.
+
+
+However, in our study, based on the SNPEff annotation, we set any stop related, start-los and missense as "amino acid changing" snp (need to be rewored in paper)
+In another word, we are only interested in:
+
+```
 missense_variant
 missense_variant&splice_region_variant
 splice_region_variant&synonymous_variant
@@ -45,6 +75,9 @@ stop_lost
 stop_lost&splice_region_variant
 synonymous_variant
 ```
+
+
+
 
 ## Four-fold/Zero-fold categorization
 #need to double check on the script
