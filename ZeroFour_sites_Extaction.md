@@ -16,8 +16,17 @@ sort -V fake_mutation.vcf | uniq > fakemuta_uniq.vcf
 
 ## Annotate for effect
 
+from 2020 there is a Ggallus 6a database in the program *yay!*
+
 ```
-java -Xmx4g -jar /backup/home/zhenying_Group/huangruoshi/biosoft/snpEff/snpEff.jar -c /backup/home/zhenying_Group/huangruoshi/biosoft/snpEff/snpEff.config -v Galgal6a fakemuta_uniq.vcf > output_ann.vcf
+#go to snpeff folder
+java -jar snpEff.jar download -v GRCg6a.99
+```
+
+
+```
+
+java -Xmx4g -jar $snpeff/snpEff.jar -c $snpeff/snpEff.config -v Galgal6a fakemuta_uniq.vcf > output_ann.vcf
 cat output_ann.vcf | grep -v "#" | sed 's/NN=/ /' | awk '{print $1 "_" $2, $9}' | sed 's/||WARNING_TRANSCRIPT_NO_START_CODON//g' | sed 's/|||||/BBBBB/g' | sed 's/||,/ /g' | sed 's/,/ /g' > format.ann
 ```
 
