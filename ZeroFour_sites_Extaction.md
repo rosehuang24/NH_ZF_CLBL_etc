@@ -86,4 +86,7 @@ Sure it can be improved (such as using parser and gzip reading etc.)
 
 ```
 python3 fold_categorizing.py output_ann.vcf four-fold.coords zero-fold.coords all_others-folds.coords
+```
 
+Update 2021/12/02:
+The results are deposited here. Named 0-fold.coord.gz and 4-fold.coord.gz (gzip)
