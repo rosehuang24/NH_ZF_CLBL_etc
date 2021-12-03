@@ -1,4 +1,4 @@
-# Workflow
+# G-PHOCS_freeman_NH Workflow
 
 wd: /storage/zhenyingLab/huangruoshi/neutral_region
 
