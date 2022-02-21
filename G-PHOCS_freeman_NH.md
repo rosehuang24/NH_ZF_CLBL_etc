@@ -1,6 +1,6 @@
 # G-PHOCS_freeman_NH Workflow
 
-wd: /storage/zhenyingLab/huangruoshi/neutral_region
+wd: /storage/zhenyingLab/huangruoshi/20211122_nh
 
 ## Phastcons scores:
 
