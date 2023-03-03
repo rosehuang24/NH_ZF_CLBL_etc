@@ -26,7 +26,7 @@ java -jar snpEff.jar download -v GRCg6a.99
 
 ```
 
-java -Xmx4g -jar $snpeff/snpEff.jar -c $snpeff/snpEff.config -v Galgal6a fakemuta_uniq.vcf > output_ann.vcf
+java -Xmx4g -jar $snpeff/snpEff.jar -c $snpeff/snpEff.config -v GRCg6a.99 fakemuta_uniq.vcf > output_ann.vcf
 
 ```
 
