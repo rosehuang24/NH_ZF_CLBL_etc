@@ -8,8 +8,8 @@ inh = open(infile, 'r')
 outfile = sys.argv[2]
 outh = open(outfile, 'w')
 
-outh.write("##fileformat=VCFv4.2\n")
-outh.write('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
+#outh.write("##fileformat=VCFv4.2\n")
+#outh.write('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
 
 from Bio import SeqIO
 from Bio.Seq import Seq
