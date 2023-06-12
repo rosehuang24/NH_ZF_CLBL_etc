@@ -12,7 +12,7 @@ bedtools getfasta -fi Gallus_gallus.GRCg6a.dna.toplevel.fa -bed CDS.from.ensembl
 ```
 python3 fakemuta.py ../chicken_ref/CDS.from.ensembl.ffn fake_mutation.vcf
 sort -V fake_mutation.vcf | uniq > fakemuta_uniq.vcf
-sed -i '1i\##fileformat=VCFv4.2\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n' fakemuta_uniq.vcf
+sed -i '1i\##fileformat=VCFv4.2\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO' fakemuta_uniq.vcf
 ```
 
 ## Annotate for effect
