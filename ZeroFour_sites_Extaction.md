@@ -3,7 +3,7 @@
 ## Get CDS sequece
 
 ```
-grep "^>" Gallus_gallus.GRCg6a.cds.all.fa | awk -F ":" '{print$3"\t"$4"\t"$5}' | sort -k1,1 -k2,2n| bedtools merge > CDS.from.ensembl.bed
+grep "^>" Gallus_gallus.GRCg6a.cds.all.fa | awk -F ":" '{print$3"\t"$4-1"\t"$5}' | sort -k1,1 -k2,2n| bedtools merge > CDS.from.ensembl.bed
 
 bedtools getfasta -fi Gallus_gallus.GRCg6a.dna.toplevel.fa -bed CDS.from.ensembl.bed -fo CDS.from.ensembl.ffn
 ```
