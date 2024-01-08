@@ -47,7 +47,17 @@ parallel --colsep '\t' -q awk '($1=="{1}") { if($3 > {2}) print $1"\t"$2"\t{2}";
 
 ## repeatitive regions
 
-To combine all the disposable regions:
+Get repetitve regions:
+
+```
+bedtools maskfasta -fi ../chicken_ref/Gallus_gallus.GRCg6a.dna_rm.toplevel.fa -bed dispose_PC0.5_CDS_both.flanking.bed -fo masked_CDS_PC_flanking_repetitive.fa
+
+#Need to invoke python2, not 3
+python generate_masked_ranges.py masked_CDS_PC_flanking_repetitive.fa > dispose_flanking_PC_CDS.repetitive.bed
+
+```
+
+## To combine all the disposable regions:
 
 ```
 cat PC_larger_than_0.5_length3_100b_flanking.merged.tailed.bed CDS.50kb_flanking.bed | sort -k 1,1 -k 2,2n | bedtools merge > dispose_PC0.5_CDS_both.flanking.bed
